@@ -25,7 +25,7 @@ jobs:
       - name: Run Gradle tasks
         run: ./gradlew preMerge --continue
       - name: Publish on Plugin Portal
-        run: ./gradlew publishPlugins
+        run: ./gradlew --project-dir plugin-build publishPlugins
         if: success()
         env:
           GRADLE_PUBLISH_KEY: ${{ secrets.GRADLE_PUBLISH_KEY }}
