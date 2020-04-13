@@ -1,0 +1,34 @@
+name: Publish Plugin to Portal
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  gradle:
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.head_commit.message, 'ci skip') }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Cache Gradle Caches
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches/
+          key: cache-gradle-cache
+      - name: Cache Gradle Wrapper
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle/wrapper/
+          key: cache-gradle-wrapper
+      - name: Run Gradle tasks
+        run: ./gradlew preMerge --continue
+      - name: Publish on Plugin Portal
+        run: ./gradlew publishPlugins
+        if: success()
+        env:
+          GRADLE_PUBLISH_KEY: ${{ secrets.GRADLE_PUBLISH_KEY }}
+          GRADLE_PUBLISH_SECRET: ${{ secrets.GRADLE_PUBLISH_SECRET }}
+      - name: Stop Gradle
+        run: ./gradlew --stop
