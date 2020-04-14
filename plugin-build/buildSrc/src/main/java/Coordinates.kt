@@ -1,7 +1,7 @@
 object PluginCoordinates {
     const val ID = "com.ncorti.kotlin.gradle.template.plugin"
     const val GROUP = "com.ncorti.kotlin.gradle.template"
-    const val VERSION = "0.1.0"
+    const val VERSION = "1.0.0"
     const val IMPLEMENTATION_CLASS = "com.ncorti.kotlin.gradle.template.plugin.TemplatePlugin"
 }
 
