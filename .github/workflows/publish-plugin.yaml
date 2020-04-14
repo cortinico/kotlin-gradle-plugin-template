@@ -2,8 +2,8 @@ name: Publish Plugin to Portal
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - '*'
 
 jobs:
   gradle:
