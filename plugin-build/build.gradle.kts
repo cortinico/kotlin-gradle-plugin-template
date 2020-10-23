@@ -1,4 +1,4 @@
-import com.github.benmanes.gradle.versions.updates.*
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 plugins {
     kotlin("jvm") version BuildPluginsVersion.KOTLIN apply false

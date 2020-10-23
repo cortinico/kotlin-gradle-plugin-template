@@ -1,9 +1,9 @@
 package com.ncorti.kotlin.gradle.template.plugin
 
-import javax.inject.Inject
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
+import javax.inject.Inject
 
 const val DEFAULT_OUTPUT_FILE = "template-example.txt"
 
