@@ -1,6 +1,5 @@
 object Versions {
     const val JUNIT = "4.13.2"
-    const val KTLINT = "0.41.0"
 }
 
 object BuildPluginsVersion {
