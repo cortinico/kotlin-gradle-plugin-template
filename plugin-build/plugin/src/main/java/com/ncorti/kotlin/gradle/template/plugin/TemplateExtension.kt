@@ -16,6 +16,7 @@ abstract class TemplateExtension @Inject constructor(project: Project) {
 
     val tag: Property<String> = objects.property(String::class.java)
 
+    // Example of a property with a default set with .convention
     val outputFile: RegularFileProperty = objects.fileProperty().convention(
         project.layout.buildDirectory.file(DEFAULT_OUTPUT_FILE)
     )
