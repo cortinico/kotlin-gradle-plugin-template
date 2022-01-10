@@ -1,4 +1,5 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import io.gitlab.arturbosch.detekt.Detekt
 
 plugins {
     kotlin("jvm") version BuildPluginsVersion.KOTLIN apply false
@@ -11,7 +12,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        jcenter()
     }
 }
 
@@ -36,12 +36,13 @@ subprojects {
 
     detekt {
         config = rootProject.files("config/detekt/detekt.yml")
-        reports {
-            html {
-                enabled = true
-                destination = file("build/reports/detekt.html")
-            }
-        }
+    }
+}
+
+tasks.withType<Detekt>().configureEach {
+    reports {
+        html.required.set(true)
+        html.outputLocation.set(file("build/reports/detekt.html"))
     }
 }
 
