@@ -41,7 +41,7 @@ pluginBundle {
 
     mavenCoordinates {
         groupId = PluginCoordinates.GROUP
-        artifactId = PluginCoordinates.ID
+        artifactId = PluginCoordinates.ID.removePrefix("$groupId.")
         version = PluginCoordinates.VERSION
     }
 }
