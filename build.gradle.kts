@@ -72,3 +72,7 @@ tasks.register("preMerge") {
     dependsOn(gradle.includedBuild("plugin-build").task(":plugin:check"))
     dependsOn(gradle.includedBuild("plugin-build").task(":plugin:validatePlugins"))
 }
+
+tasks.wrapper {
+    distributionType = Wrapper.DistributionType.ALL
+}
