@@ -1,12 +1,11 @@
-import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import io.gitlab.arturbosch.detekt.Detekt
 
 plugins {
-    kotlin("jvm") version BuildPluginsVersion.KOTLIN apply false
-    id("com.gradle.plugin-publish") version BuildPluginsVersion.PLUGIN_PUBLISH apply false
-    id("io.gitlab.arturbosch.detekt") version BuildPluginsVersion.DETEKT
-    id("org.jlleitschuh.gradle.ktlint") version BuildPluginsVersion.KTLINT
-    id("com.github.ben-manes.versions") version BuildPluginsVersion.VERSIONS_PLUGIN
+    alias(libs.plugins.kotlin) apply false
+    alias(libs.plugins.pluginPublish) apply false
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.ktlint)
+    alias(libs.plugins.versionCheck)
 }
 
 allprojects {
@@ -48,14 +47,10 @@ tasks.withType<Detekt>().configureEach {
     }
 }
 
-tasks.withType<DependencyUpdatesTask> {
-    rejectVersionIf {
-        isNonStable(candidate.version)
-    }
-}
-
-fun isNonStable(version: String) = "^[0-9,.v-]+(-r)?$".toRegex().matches(version).not()
-
 tasks.register("clean", Delete::class.java) {
     delete(rootProject.buildDir)
+}
+
+tasks.wrapper {
+    distributionType = Wrapper.DistributionType.ALL
 }
