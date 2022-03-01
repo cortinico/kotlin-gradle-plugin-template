@@ -48,11 +48,11 @@ tasks.withType<Detekt>().configureEach {
 
 tasks.withType<DependencyUpdatesTask> {
     rejectVersionIf {
-        isNonStable(candidate.version)
+        candidate.version.isNonStable()
     }
 }
 
-fun isNonStable(version: String) = "^[0-9,.v-]+(-r)?$".toRegex().matches(version).not()
+fun String.isNonStable() = "^[0-9,.v-]+(-r)?$".toRegex().matches(this).not()
 
 tasks.register("clean", Delete::class.java) {
     delete(rootProject.buildDir)
