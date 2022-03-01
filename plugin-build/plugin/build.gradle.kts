@@ -8,7 +8,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk7"))
     implementation(gradleApi())
 
-    testImplementation(TestingLib.JUNIT)
+    testImplementation(libs.junit)
 }
 
 java {

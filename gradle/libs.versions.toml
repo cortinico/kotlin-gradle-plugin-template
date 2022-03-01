@@ -1,6 +1,9 @@
 [plugins]
 detekt = "io.gitlab.arturbosch.detekt:1.19.0"
-kotlin = "org.jetbrains.kotlin.kapt:1.4.32"
-ktlint = "org.jlleitschuh.gradle.ktlint:10.0.0"
+kotlin = "org.jetbrains.kotlin.kapt:1.6.10"
+ktlint = "org.jlleitschuh.gradle.ktlint:10.2.1"
 pluginPublish = "com.gradle.plugin-publish:0.14.0"
-versionCheck = "com.github.ben-manes.versions:0.38.0"
+versionCheck = "com.github.ben-manes.versions:0.42.0"
+
+[libraries]
+junit = "junit:junit:4.13.2"
