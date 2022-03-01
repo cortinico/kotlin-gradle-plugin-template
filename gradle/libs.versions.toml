@@ -1,9 +1,16 @@
+[versions]
+detekt = "1.19.0"
+kotlin = "1.6.10"
+ktlintGradle = "10.2.1"
+pluginPublish = "0.14.0"
+versionCheck = "0.42.0"
+
 [plugins]
-detekt = "io.gitlab.arturbosch.detekt:1.19.0"
-kotlin = "org.jetbrains.kotlin.kapt:1.6.10"
-ktlint = "org.jlleitschuh.gradle.ktlint:10.2.1"
-pluginPublish = "com.gradle.plugin-publish:0.14.0"
-versionCheck = "com.github.ben-manes.versions:0.42.0"
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt"}
+kotlin = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin"}
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintGradle"}
+pluginPublish = { id = "com.gradle.plugin-publish", version.ref = "pluginPublish"}
+versionCheck = { id = "com.github.ben-manes.versions", version.ref = "versionCheck"}
 
 [libraries]
 junit = "junit:junit:4.13.2"
