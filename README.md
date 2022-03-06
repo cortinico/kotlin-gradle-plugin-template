@@ -2,7 +2,7 @@
 
 [![Use this template](https://img.shields.io/badge/-Use%20this%20template-brightgreen)](https://github.com/cortinico/kotlin-gradle-plugin-template/generate) [![Pre Merge Checks](https://github.com/cortinico/kotlin-gradle-plugin-template/workflows/Pre%20Merge%20Checks/badge.svg)](https://github.com/cortinico/kotlin-gradle-plugin-template/actions?query=workflow%3A%22Pre+Merge+Checks%22)  [![License](https://img.shields.io/github/license/cortinico/kotlin-android-template.svg)](LICENSE) ![Language](https://img.shields.io/github/languages/top/cortinico/kotlin-android-template?color=blue&logo=kotlin)
 
-A simple Github template that lets you create a **Gradle Plugin** 🐘 project using **100% Kotlin** and be up and running in a **few seconds**. 
+A simple Github template that lets you create a **Gradle Plugin** 🐘 project using **100% Kotlin** and be up and running in a **few seconds**.
 
 This template is focused on delivering a project with **static analysis** and **continuous integration** already in place.
 
@@ -19,7 +19,7 @@ Once created don't forget to update the:
 - **100% Kotlin-only template**.
 - Plugin build setup with **composite build**.
 - 100% Gradle Kotlin DSL setup.
-- Dependency versions managed via `buildSrc`.
+- Dependency versions managed via `libs.versions.toml`.
 - CI Setup with GitHub Actions.
 - Kotlin Static Analysis via `ktlint` and `detekt`.
 - Publishing-ready to Gradle Portal.
@@ -29,8 +29,8 @@ Once created don't forget to update the:
 ## Composite Build 📦
 
 This template is using a [Gradle composite build](https://docs.gradle.org/current/userguide/composite_builds.html) to build, test and publish the plugin. This means that you don't need to run Gradle twice to test the changes on your Gradle plugin (no more `publishToMavenLocal` tricks or so).
- 
-The included build is inside the [plugin-build](plugin-build) folder. 
+
+The included build is inside the [plugin-build](plugin-build) folder.
 
 ### `preMerge` task
 
@@ -66,7 +66,7 @@ Please note that you need to configure two secrets: `GRADLE_PUBLISH_KEY` and `GR
 
 This template is designed to use Kotlin everywhere. The build files are written using [**Gradle Kotlin DSL**](https://docs.gradle.org/current/userguide/kotlin_dsl.html) as well as the [Plugin DSL](https://docs.gradle.org/current/userguide/plugins.html#sec:plugins_block) to setup the build.
 
-Dependencies are centralized inside the [Dependencies.kt](buildSrc/src/main/java/Dependencies.kt) file in the `buildSrc` folder. Please note that there is another [Dependencies.kt](plugin-build/buildSrc/src/main/java/Dependencies.kt) inside the included build to keep the versions isolated.
+Dependencies are centralized inside the [libs.versions.toml](gradle/libs.versions.toml).
 
 Moreover, a minimalistic Gradle Plugin is already provided in Kotlin to let you easily start developing your own around it.
 
@@ -92,4 +92,4 @@ Feel free to open a issue or submit a pull request for any bugs/improvements.
 ## License 📄
 
 This template is licensed under the MIT License - see the [License](License) file for details.
-Please note that the generated template is offering to start with a MIT license but you can change it to whatever you wish, as long as you attribute under the MIT terms that you're using the template. 
+Please note that the generated template is offering to start with a MIT license but you can change it to whatever you wish, as long as you attribute under the MIT terms that you're using the template.
