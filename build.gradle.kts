@@ -1,11 +1,9 @@
-import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import io.gitlab.arturbosch.detekt.Detekt
 
 plugins {
     alias(libs.plugins.kotlin) apply false
     alias(libs.plugins.detekt)
     alias(libs.plugins.ktlint)
-    alias(libs.plugins.versionCheck)
 }
 
 allprojects {
@@ -45,14 +43,6 @@ tasks.withType<Detekt>().configureEach {
         html.outputLocation.set(file("build/reports/detekt.html"))
     }
 }
-
-tasks.withType<DependencyUpdatesTask> {
-    rejectVersionIf {
-        candidate.version.isNonStable()
-    }
-}
-
-fun String.isNonStable() = "^[0-9,.v-]+(-r)?$".toRegex().matches(this).not()
 
 tasks.register("clean", Delete::class.java) {
     delete(rootProject.buildDir)
