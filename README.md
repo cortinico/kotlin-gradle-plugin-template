@@ -19,7 +19,7 @@ Once created don't forget to update the:
 - **100% Kotlin-only template**.
 - Plugin build setup with **composite build**.
 - 100% Gradle Kotlin DSL setup.
-- Dependency versions managed via `libs.versions.toml`.
+- Dependency versions managed via Gradle Versions Catalog (`libs.versions.toml`).
 - CI Setup with GitHub Actions.
 - Kotlin Static Analysis via `ktlint` and `detekt`.
 - Publishing-ready to Gradle Portal.
