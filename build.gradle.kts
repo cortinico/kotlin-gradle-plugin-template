@@ -6,13 +6,6 @@ plugins {
     alias(libs.plugins.ktlint)
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
 subprojects {
     apply {
         plugin("io.gitlab.arturbosch.detekt")
