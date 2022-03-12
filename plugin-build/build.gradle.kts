@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.pluginPublish) apply false
     alias(libs.plugins.detekt)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.versionCheck)
 }
 
 allprojects {
