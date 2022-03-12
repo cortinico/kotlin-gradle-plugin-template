@@ -8,13 +8,6 @@ plugins {
     alias(libs.plugins.versionCheck)
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
 subprojects {
     apply {
         plugin("io.gitlab.arturbosch.detekt")
