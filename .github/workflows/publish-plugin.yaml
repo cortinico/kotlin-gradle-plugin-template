@@ -16,16 +16,9 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
       - name: Cache Gradle Caches
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/**.gradle*', '**/gradle/wrapper/gradle-wrapper.properties', '**/libs.versions.toml') }}
+        uses: gradle/gradle-build-action@v2
       - name: Run Gradle tasks
         run: ./gradlew preMerge --continue
       - name: Publish on Plugin Portal
         run: ./gradlew --project-dir plugin-build setupPluginUploadFromEnvironment publishPlugins
         if: success()
-      - name: Stop Gradle
-        run: ./gradlew --stop
