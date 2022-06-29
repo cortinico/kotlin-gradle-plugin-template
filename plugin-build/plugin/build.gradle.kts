@@ -22,6 +22,7 @@ gradlePlugin {
             id = PluginCoordinates.ID
             implementationClass = PluginCoordinates.IMPLEMENTATION_CLASS
             version = PluginCoordinates.VERSION
+            displayName = PluginBundle.DISPLAY_NAME
         }
     }
 }
@@ -32,18 +33,6 @@ pluginBundle {
     vcsUrl = PluginBundle.VCS
     description = PluginBundle.DESCRIPTION
     tags = PluginBundle.TAGS
-
-    plugins {
-        getByName(PluginCoordinates.ID) {
-            displayName = PluginBundle.DISPLAY_NAME
-        }
-    }
-
-    mavenCoordinates {
-        groupId = PluginCoordinates.GROUP
-        artifactId = PluginCoordinates.ID.removePrefix("$groupId.")
-        version = PluginCoordinates.VERSION
-    }
 }
 
 tasks.create("setupPluginUploadFromEnvironment") {
