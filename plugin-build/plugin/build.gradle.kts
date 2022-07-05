@@ -1,7 +1,7 @@
 plugins {
     kotlin("jvm")
-    id("java-gradle-plugin")
-    id("com.gradle.plugin-publish")
+    `java-gradle-plugin`
+    alias(libs.plugins.pluginPublish)
 }
 
 dependencies {
