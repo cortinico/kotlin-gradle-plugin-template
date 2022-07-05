@@ -12,11 +12,6 @@ allprojects {
     group = PluginCoordinates.GROUP
     version = PluginCoordinates.VERSION
 
-    repositories {
-        google()
-        mavenCentral()
-    }
-
     apply {
         plugin("io.gitlab.arturbosch.detekt")
         plugin("org.jlleitschuh.gradle.ktlint")
