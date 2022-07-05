@@ -18,21 +18,26 @@ java {
 
 gradlePlugin {
     plugins {
-        create(PluginCoordinates.ID) {
-            id = PluginCoordinates.ID
-            implementationClass = PluginCoordinates.IMPLEMENTATION_CLASS
-            version = PluginCoordinates.VERSION
-            displayName = PluginBundle.DISPLAY_NAME
+        create(property("ID").toString()) {
+            id = property("ID").toString()
+            implementationClass = "com.ncorti.kotlin.gradle.template.plugin.TemplatePlugin"
+            version = property("VERSION").toString()
+            displayName = "An empty Gradle Plugin from a template"
         }
     }
 }
 
 // Configuration Block for the Plugin Marker artifact on Plugin Central
 pluginBundle {
-    website = PluginBundle.WEBSITE
-    vcsUrl = PluginBundle.VCS
-    description = PluginBundle.DESCRIPTION
-    tags = PluginBundle.TAGS
+    website = "https://github.com/cortinico/kotlin-gradle-plugin-template"
+    vcsUrl = "https://github.com/cortinico/kotlin-gradle-plugin-template"
+    description = "An empty Gradle plugin created from a template"
+    tags = listOf(
+        "plugin",
+        "gradle",
+        "sample",
+        "template"
+    )
 }
 
 tasks.create("setupPluginUploadFromEnvironment") {

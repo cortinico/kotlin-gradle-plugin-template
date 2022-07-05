@@ -9,8 +9,8 @@ plugins {
 }
 
 allprojects {
-    group = PluginCoordinates.GROUP
-    version = PluginCoordinates.VERSION
+    group = "com.ncorti.kotlin.gradle.template"
+    version = property("VERSION").toString()
 
     apply {
         plugin(rootProject.libs.plugins.detekt.get().pluginId)
