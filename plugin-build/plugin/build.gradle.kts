@@ -32,12 +32,7 @@ pluginBundle {
     website = "https://github.com/cortinico/kotlin-gradle-plugin-template"
     vcsUrl = "https://github.com/cortinico/kotlin-gradle-plugin-template"
     description = "An empty Gradle plugin created from a template"
-    tags = listOf(
-        "plugin",
-        "gradle",
-        "sample",
-        "template"
-    )
+    tags = listOf("plugin", "gradle", "sample", "template")
 }
 
 tasks.create("setupPluginUploadFromEnvironment") {
