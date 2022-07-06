@@ -9,7 +9,7 @@ plugins {
 }
 
 allprojects {
-    group = "com.ncorti.kotlin.gradle.template"
+    group = property("GROUP").toString()
     version = property("VERSION").toString()
 
     apply {
