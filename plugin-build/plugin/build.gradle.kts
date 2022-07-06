@@ -1,11 +1,11 @@
 plugins {
     kotlin("jvm")
-    id("java-gradle-plugin")
-    id("com.gradle.plugin-publish")
+    `java-gradle-plugin`
+    alias(libs.plugins.pluginPublish)
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk7"))
+    implementation(kotlin("stdlib"))
     implementation(gradleApi())
 
     testImplementation(libs.junit)
@@ -18,21 +18,21 @@ java {
 
 gradlePlugin {
     plugins {
-        create(PluginCoordinates.ID) {
-            id = PluginCoordinates.ID
-            implementationClass = PluginCoordinates.IMPLEMENTATION_CLASS
-            version = PluginCoordinates.VERSION
-            displayName = PluginBundle.DISPLAY_NAME
+        create(property("ID").toString()) {
+            id = property("ID").toString()
+            implementationClass = property("IMPLEMENTATION_CLASS").toString()
+            version = property("VERSION").toString()
+            displayName = property("DISPLAY_NAME").toString()
         }
     }
 }
 
 // Configuration Block for the Plugin Marker artifact on Plugin Central
 pluginBundle {
-    website = PluginBundle.WEBSITE
-    vcsUrl = PluginBundle.VCS
-    description = PluginBundle.DESCRIPTION
-    tags = PluginBundle.TAGS
+    website = property("WEBSITE").toString()
+    vcsUrl = property("VCS_URL").toString()
+    description = property("DESCRIPTION").toString()
+    tags = listOf("plugin", "gradle", "sample", "template")
 }
 
 tasks.create("setupPluginUploadFromEnvironment") {

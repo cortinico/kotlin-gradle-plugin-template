@@ -9,17 +9,12 @@ plugins {
 }
 
 allprojects {
-    group = PluginCoordinates.GROUP
-    version = PluginCoordinates.VERSION
-
-    repositories {
-        google()
-        mavenCentral()
-    }
+    group = property("GROUP").toString()
+    version = property("VERSION").toString()
 
     apply {
-        plugin("io.gitlab.arturbosch.detekt")
-        plugin("org.jlleitschuh.gradle.ktlint")
+        plugin(rootProject.libs.plugins.detekt.get().pluginId)
+        plugin(rootProject.libs.plugins.ktlint.get().pluginId)
     }
 
     ktlint {
