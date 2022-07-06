@@ -20,18 +20,18 @@ gradlePlugin {
     plugins {
         create(property("ID").toString()) {
             id = property("ID").toString()
-            implementationClass = "com.ncorti.kotlin.gradle.template.plugin.TemplatePlugin"
+            implementationClass = property("IMPLEMENTATION_CLASS").toString()
             version = property("VERSION").toString()
-            displayName = "An empty Gradle Plugin from a template"
+            displayName = property("DISPLAY_NAME").toString()
         }
     }
 }
 
 // Configuration Block for the Plugin Marker artifact on Plugin Central
 pluginBundle {
-    website = "https://github.com/cortinico/kotlin-gradle-plugin-template"
-    vcsUrl = "https://github.com/cortinico/kotlin-gradle-plugin-template"
-    description = "An empty Gradle plugin created from a template"
+    website = property("WEBSITE").toString()
+    vcsUrl = property("VCS_URL").toString()
+    description = property("DESCRIPTION").toString()
     tags = listOf("plugin", "gradle", "sample", "template")
 }
 
