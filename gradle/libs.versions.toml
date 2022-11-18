@@ -2,7 +2,7 @@
 detekt = "1.21.0"
 kotlin = "1.7.21"
 ktlintGradle = "11.0.0"
-pluginPublish = "1.0.0"
+pluginPublish = "1.1.0"
 versionCheck = "0.44.0"
 
 [plugins]
