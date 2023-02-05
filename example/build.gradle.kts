@@ -1,8 +1,6 @@
 plugins {
     java
-    id("com.ncorti.kotlin.gradle.template.plugin")
+    id("io.github.fpiechowski.hex")
 }
 
-templateExampleConfig {
-    message.set("Just trying this gradle plugin...")
-}
+hex

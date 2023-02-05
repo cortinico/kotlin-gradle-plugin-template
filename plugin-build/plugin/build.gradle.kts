@@ -1,3 +1,4 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     kotlin("jvm")
     `java-gradle-plugin`
@@ -7,6 +8,7 @@ plugins {
 dependencies {
     implementation(kotlin("stdlib"))
     implementation(gradleApi())
+    implementation(gradleKotlinDsl())
 
     testImplementation(libs.junit)
 }
