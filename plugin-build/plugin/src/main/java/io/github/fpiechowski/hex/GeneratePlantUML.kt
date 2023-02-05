@@ -14,23 +14,24 @@ abstract class GeneratePlantUML : DefaultTask() {
         // group = BasePlugin.BUILD_GROUP
     }
 
-/*
-    @get:Input
-    @get:Option(option = "message", description = "A message to be printed in the output file")
-    abstract val message: Property<String>
+    /*
+        @get:Input
+        @get:Option(option = "message", description = "A message to be printed in the output file")
+        abstract val message: Property<String>
 
-    @get:Input
-    @get:Option(option = "tag", description = "A Tag to be used for debug and in the output file")
-    @get:Optional
-    abstract val tag: Property<String>
-*/
+        @get:Input
+        @get:Option(option = "tag", description = "A Tag to be used for debug and in the output file")
+        @get:Optional
+        abstract val tag: Property<String>
+    */
 
     @get:OutputFile
     abstract val outputFile: RegularFileProperty
 
     @TaskAction
     fun sampleAction() {
-        outputFile.get().asFile.writeText("""
+        outputFile.get().asFile.writeText(
+            """
             @startuml
             left to right direction
 
@@ -62,6 +63,7 @@ abstract class GeneratePlantUML : DefaultTask() {
             database_adapter -> database
 
             @enduml
-        """.trimIndent())
+        """.trimIndent()
+        )
     }
 }
