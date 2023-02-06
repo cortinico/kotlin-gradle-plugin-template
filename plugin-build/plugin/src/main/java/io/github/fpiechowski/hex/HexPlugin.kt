@@ -12,8 +12,9 @@ abstract class HexPlugin : Plugin<Project> {
         // Add the 'template' extension object
         val extension = project.extensions.create(EXTENSION_NAME, HexExtension::class.java, project)
 
-        with(project.extensions.getByType(JavaPluginExtension::class.java)) {
+        project.plugins.apply("org.gradle.java-gradle-plugin")
 
+        with(project.extensions.getByType(JavaPluginExtension::class.java)) {
             sourceSets.run {
                 val port = create("port")
 
@@ -40,7 +41,8 @@ abstract class HexPlugin : Plugin<Project> {
             }
 
             project.configurations.run {
-                val portImplementation = getByName("portImplementation")
+                val portImplementation = getByName("portImplementation") {
+                }
                 val adapterImplementation = getByName("adapterImplementation") {
                     it.extendsFrom(portImplementation)
                 }
@@ -57,7 +59,7 @@ abstract class HexPlugin : Plugin<Project> {
             }
         }
 
-        // Add a task that uses configuration from the extension object
+        // Add a task that uses configu1ration from the extension object
         project.tasks.register(TASK_NAME, GeneratePlantUML::class.java) {
             it.outputFile.set(extension.plantUmlFile)
         }

@@ -63,7 +63,7 @@ abstract class GeneratePlantUML : DefaultTask() {
             database_adapter -> database
 
             @enduml
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 }

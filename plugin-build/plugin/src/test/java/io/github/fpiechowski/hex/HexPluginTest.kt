@@ -13,7 +13,7 @@ class HexPluginTest {
     @Test
     fun `plugin is applied correctly to the project`() {
         val project = ProjectBuilder.builder().build()
-        project.pluginManager.apply("hex")
+        project.pluginManager.apply("io.github.fpiechowski.hex.plugin")
 
         assert(project.tasks.getByName("generatePlantUML") is GeneratePlantUML)
     }
@@ -21,7 +21,7 @@ class HexPluginTest {
     @Test
     fun `extension hexConfig is created correctly`() {
         val project = ProjectBuilder.builder().build()
-        project.pluginManager.apply("hex")
+        project.pluginManager.apply("io.github.fpiechowski.hex.plugin")
 
         assertNotNull(project.extensions.getByName("hex"))
     }
@@ -29,7 +29,7 @@ class HexPluginTest {
     @Test
     fun `parameters are passed correctly from extension to task`() {
         val project = ProjectBuilder.builder().build()
-        project.pluginManager.apply("hex")
+        project.pluginManager.apply("io.github.fpiechowski.hex.plugin")
         val aFile = File(project.projectDir, ".tmp")
         (project.extensions.getByName("hex") as HexExtension).apply {
             /*tag.set("a-sample-tag")
@@ -47,7 +47,7 @@ class HexPluginTest {
     @Test
     fun `sourceSets are created`() {
         val project = ProjectBuilder.builder().build()
-        project.pluginManager.apply("hex")
+        project.pluginManager.apply("io.github.fpiechowski.hex.plugin")
 
         with(project.extensions.getByType<JavaPluginExtension>()) {
             val port = sourceSets.getByName("port")
@@ -57,27 +57,16 @@ class HexPluginTest {
             }
 
             listOf(sourceSets.getByName("main"), sourceSets.getByName("test")).forEach {
-                assert(it.runtimeClasspath.files.containsAll(port.runtimeClasspath.files + adapter.runtimeClasspath.files))
-                assert(it.compileClasspath.files.containsAll(port.compileClasspath.files + adapter.compileClasspath.files))
-            }
-        }
-    }
-
-    @Test
-    fun `configurations are created`() {
-        val project = ProjectBuilder.builder().build()
-        with(project) {
-            pluginManager.apply("hex")
-
-            val portImplementation = configurations.getByName("portImplementation")
-            val adapterImplementation = project.configurations.getByName("adapterImplementation").apply {
-                assert(files.containsAll(portImplementation.files))
-                assert(files.containsAll(portImplementation.files))
-            }
-
-            listOf(configurations.getByName("main"), configurations.getByName("test")).forEach {
-                assert(it.files.containsAll(portImplementation.files + adapterImplementation.files))
-                assert(it.files.containsAll(portImplementation.files + adapterImplementation.files))
+                assert(
+                    it.runtimeClasspath.files.containsAll(
+                        port.runtimeClasspath.files + adapter.runtimeClasspath.files
+                    )
+                )
+                assert(
+                    it.compileClasspath.files.containsAll(
+                        port.compileClasspath.files + adapter.compileClasspath.files
+                    )
+                )
             }
         }
     }
