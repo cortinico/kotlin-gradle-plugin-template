@@ -28,7 +28,7 @@ jobs:
 
         # We do a run of the new task `templateExample` created by the plugin
       - name: Run the plugin
-        run: ./gradlew templateExample --message="Test Run" --tag=CI
+        run: ./gradlew generatePlantUML
         if: success()
         # And we verify that the output of the file is correct.
       - name: Verify the plugin output
