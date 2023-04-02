@@ -3,4 +3,5 @@ plugins {
     id("io.github.fpiechowski.hex.plugin")
 }
 
-hex
+hex {
+}

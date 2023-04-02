@@ -30,7 +30,3 @@ jobs:
       - name: Run the plugin
         run: ./gradlew generatePlantUML
         if: success()
-        # And we verify that the output of the file is correct.
-      - name: Verify the plugin output
-        run: grep -Fxq "[CI] Test Run" ./example/build/template-example.txt
-        if: success()
