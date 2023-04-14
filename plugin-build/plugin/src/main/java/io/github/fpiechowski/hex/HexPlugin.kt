@@ -15,68 +15,90 @@ abstract class HexPlugin : Plugin<Project> {
         val adapterName = extension.adapterName.get()
 
         with(project.extensions.getByType(JavaPluginExtension::class.java)) {
-            sourceSets.run {
-                val domain = create(domainName)
+            setupSourceSets(portName, domainName, adapterName, project)
+            setupConfigurations(project, portName, domainName, adapterName)
+        }
+    }
 
-                val port = create(portName) {
-                    it.runtimeClasspath += domain.output
-                    it.compileClasspath += domain.output
-                }
-
-                val adapter = create(adapterName) {
-                    it.runtimeClasspath += domain.output
-                    it.compileClasspath += domain.output
-
-                    it.runtimeClasspath += port.output
-                    it.compileClasspath += port.output
-                }
-
-                getByName("main") {
-                    it.runtimeClasspath += port.output
-                    it.compileClasspath += port.output
-
-                    it.runtimeClasspath += domain.output
-                    it.compileClasspath += domain.output
-
-                    it.runtimeClasspath += adapter.output
-                    it.compileClasspath += adapter.output
-                }
-
-                getByName("test") {
-                    it.runtimeClasspath += port.output
-                    it.compileClasspath += port.output
-
-                    it.runtimeClasspath += domain.output
-                    it.compileClasspath += domain.output
-
-                    it.runtimeClasspath += adapter.output
-                    it.compileClasspath += adapter.output
+    private fun JavaPluginExtension.setupSourceSets(
+        portName: String,
+        domainName: String,
+        adapterName: String,
+        project: Project
+    ) {
+        sourceSets.run {
+            val port = create(portName) {
+                it.java.srcDir("src/$domainName/java")
+                if (project.plugins.hasPlugin("kotlin")) {
+                    it.java.srcDir("src/$domainName/kotlin")
                 }
             }
 
-            project.configurations.run {
-                val portImplementation = getByName("${portName}Implementation")
+            val domain = create(domainName) {
+                it.runtimeClasspath += port.output
+                it.compileClasspath += port.output
+            }
 
-                val domainImplementation = getByName("${domainName}Implementation") {
-                    it.extendsFrom(portImplementation)
-                }
+            val adapter = create(adapterName) {
+                it.runtimeClasspath += domain.output
+                it.compileClasspath += domain.output
 
-                val adapterImplementation = getByName("${adapterName}Implementation") {
-                    it.extendsFrom(domainImplementation)
-                    it.extendsFrom(portImplementation)
-                }
+                it.runtimeClasspath += port.output
+                it.compileClasspath += port.output
+            }
 
-                getByName("implementation") {
-                    it.extendsFrom(domainImplementation)
-                    it.extendsFrom(portImplementation)
-                    it.extendsFrom(adapterImplementation)
-                }
+            getByName("main") {
+                it.runtimeClasspath += port.output
+                it.compileClasspath += port.output
 
-                getByName("testImplementation") {
-                    it.extendsFrom(domainImplementation)
-                    it.extendsFrom(portImplementation)
-                    it.extendsFrom(adapterImplementation)
-                }
+                it.runtimeClasspath += domain.output
+                it.compileClasspath += domain.output
+
+                it.runtimeClasspath += adapter.output
+                it.compileClasspath += adapter.output
+            }
+
+            getByName("test") {
+                it.runtimeClasspath += port.output
+                it.compileClasspath += port.output
+
+                it.runtimeClasspath += domain.output
+                it.compileClasspath += domain.output
+
+                it.runtimeClasspath += adapter.output
+                it.compileClasspath += adapter.output
+            }
+        }
+    }
+
+    private fun setupConfigurations(
+        project: Project,
+        portName: String,
+        domainName: String,
+        adapterName: String
+    ) {
+        project.configurations.run {
+            val portImplementation = getByName("${portName}Implementation")
+
+            val domainImplementation = getByName("${domainName}Implementation") {
+                it.extendsFrom(portImplementation)
+            }
+
+            val adapterImplementation = getByName("${adapterName}Implementation") {
+                it.extendsFrom(domainImplementation)
+                it.extendsFrom(portImplementation)
+            }
+
+            getByName("implementation") {
+                it.extendsFrom(domainImplementation)
+                it.extendsFrom(portImplementation)
+                it.extendsFrom(adapterImplementation)
+            }
+
+            getByName("testImplementation") {
+                it.extendsFrom(domainImplementation)
+                it.extendsFrom(portImplementation)
+                it.extendsFrom(adapterImplementation)
             }
         }
     }

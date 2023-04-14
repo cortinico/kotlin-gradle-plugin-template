@@ -1,3 +1,5 @@
 package hex
 
-fun domain(adapter: Port): Port = adapter
+open class Domain
+
+fun domain(port: Port<Domain>): Port<Domain> = port

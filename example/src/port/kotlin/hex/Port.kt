@@ -1,3 +1,3 @@
 package hex
 
-interface Port
+interface Port<T : Domain>

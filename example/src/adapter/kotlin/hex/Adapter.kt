@@ -1,3 +1,3 @@
 package hex
 
-fun adapter(): Port = object : Port {}
+fun adapter(): Port<Domain> = object : Port<Domain> {}

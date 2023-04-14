@@ -11,6 +11,7 @@ class HexPluginTest {
     @Test
     fun `extension hexConfig is created correctly`() {
         val project = ProjectBuilder.builder().build()
+        project.pluginManager.apply("java")
         project.pluginManager.apply("io.github.fpiechowski.hex.plugin")
 
         assertNotNull(project.extensions.getByName("hex"))
@@ -19,6 +20,7 @@ class HexPluginTest {
     @Test
     fun `sourceSets are created`() {
         val project = ProjectBuilder.builder().build()
+        project.pluginManager.apply("java")
         project.pluginManager.apply("io.github.fpiechowski.hex.plugin")
 
         val extension = project.extensions.getByType<HexExtension>()
