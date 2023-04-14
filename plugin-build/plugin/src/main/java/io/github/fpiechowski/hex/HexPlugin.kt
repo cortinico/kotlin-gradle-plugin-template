@@ -78,27 +78,21 @@ abstract class HexPlugin : Plugin<Project> {
         adapterName: String
     ) {
         project.configurations.run {
-            val portImplementation = getByName("${portName}Implementation")
+            val implementation = getByName("implementation")
+
+            val portImplementation = getByName("${portName}Implementation") {
+                it.extendsFrom(implementation)
+            }
 
             val domainImplementation = getByName("${domainName}Implementation") {
+                it.extendsFrom(implementation)
                 it.extendsFrom(portImplementation)
             }
 
-            val adapterImplementation = getByName("${adapterName}Implementation") {
+            getByName("${adapterName}Implementation") {
+                it.extendsFrom(implementation)
                 it.extendsFrom(domainImplementation)
                 it.extendsFrom(portImplementation)
-            }
-
-            getByName("implementation") {
-                it.extendsFrom(domainImplementation)
-                it.extendsFrom(portImplementation)
-                it.extendsFrom(adapterImplementation)
-            }
-
-            getByName("testImplementation") {
-                it.extendsFrom(domainImplementation)
-                it.extendsFrom(portImplementation)
-                it.extendsFrom(adapterImplementation)
             }
         }
     }
