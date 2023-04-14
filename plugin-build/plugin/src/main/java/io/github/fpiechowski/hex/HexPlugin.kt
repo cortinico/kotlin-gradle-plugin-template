@@ -5,27 +5,39 @@ import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 
 const val EXTENSION_NAME = "hex"
-const val TASK_NAME = "generatePlantUML"
 
 abstract class HexPlugin : Plugin<Project> {
     override fun apply(project: Project) {
-        // Add the 'template' extension object
         val extension = project.extensions.create(EXTENSION_NAME, HexExtension::class.java, project)
 
-        project.plugins.apply("org.gradle.java-gradle-plugin")
+        val domainName = extension.domainName.get()
+        val portName = extension.portName.get()
+        val adapterName = extension.adapterName.get()
 
         with(project.extensions.getByType(JavaPluginExtension::class.java)) {
             sourceSets.run {
-                val port = create("port")
+                val port = create(portName)
 
-                val adapter = create("adapter") {
+                val domain = create(domainName) {
                     it.runtimeClasspath += port.output
                     it.compileClasspath += port.output
+                }
+
+                val adapter = create(adapterName) {
+                    it.runtimeClasspath += domain.output
+                    it.compileClasspath += domain.output
+
+                    it.runtimeClasspath += port.output
+                    it.compileClasspath += port.output
+
                 }
 
                 getByName("main") {
                     it.runtimeClasspath += port.output
                     it.compileClasspath += port.output
+
+                    it.runtimeClasspath += domain.output
+                    it.compileClasspath += domain.output
 
                     it.runtimeClasspath += adapter.output
                     it.compileClasspath += adapter.output
@@ -35,33 +47,38 @@ abstract class HexPlugin : Plugin<Project> {
                     it.runtimeClasspath += port.output
                     it.compileClasspath += port.output
 
+                    it.runtimeClasspath += domain.output
+                    it.compileClasspath += domain.output
+
                     it.runtimeClasspath += adapter.output
                     it.compileClasspath += adapter.output
                 }
             }
 
             project.configurations.run {
-                val portImplementation = getByName("portImplementation") {
+                val portImplementation = getByName("${portName}Implementation")
+
+                val domainImplementation = getByName("${domainName}Implementation") {
+                    it.extendsFrom(portImplementation)
                 }
-                val adapterImplementation = getByName("adapterImplementation") {
+
+                val adapterImplementation = getByName("${adapterName}Implementation") {
+                    it.extendsFrom(domainImplementation)
                     it.extendsFrom(portImplementation)
                 }
 
                 getByName("implementation") {
+                    it.extendsFrom(domainImplementation)
                     it.extendsFrom(portImplementation)
                     it.extendsFrom(adapterImplementation)
                 }
 
                 getByName("testImplementation") {
+                    it.extendsFrom(domainImplementation)
                     it.extendsFrom(portImplementation)
                     it.extendsFrom(adapterImplementation)
                 }
             }
-        }
-
-        // Add a task that uses configu1ration from the extension object
-        project.tasks.register(TASK_NAME, GeneratePlantUML::class.java) {
-            it.outputFile.set(extension.plantUmlFile)
         }
     }
 }
