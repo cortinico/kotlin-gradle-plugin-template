@@ -10,17 +10,17 @@ abstract class HexPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         val extension = project.extensions.create(EXTENSION_NAME, HexExtension::class.java, project)
 
-        val domainName = extension.domainName.get()
         val portName = extension.portName.get()
+        val domainName = extension.domainName.get()
         val adapterName = extension.adapterName.get()
 
         with(project.extensions.getByType(JavaPluginExtension::class.java)) {
             sourceSets.run {
-                val port = create(portName)
+                val domain = create(domainName)
 
-                val domain = create(domainName) {
-                    it.runtimeClasspath += port.output
-                    it.compileClasspath += port.output
+                val port = create(portName) {
+                    it.runtimeClasspath += domain.output
+                    it.compileClasspath += domain.output
                 }
 
                 val adapter = create(adapterName) {
@@ -29,7 +29,6 @@ abstract class HexPlugin : Plugin<Project> {
 
                     it.runtimeClasspath += port.output
                     it.compileClasspath += port.output
-
                 }
 
                 getByName("main") {
