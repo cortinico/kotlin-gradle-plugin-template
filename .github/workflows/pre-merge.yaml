@@ -28,5 +28,5 @@ jobs:
 
         # We do a run of the new task `templateExample` created by the plugin
       - name: Run the plugin
-        run: ./gradlew generatePlantUML
+        run: ./gradlew :example:build
         if: success()
