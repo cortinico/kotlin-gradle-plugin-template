@@ -1,5 +1,9 @@
 package hex
 
-open class Domain
+import java.util.UUID
 
-fun domain(port: Port<Domain>): Port<Domain> = port
+data class User(val id: UUID)
+
+fun createUser(saveUser: SaveUser): CreateUser = {
+    saveUser(it)
+}

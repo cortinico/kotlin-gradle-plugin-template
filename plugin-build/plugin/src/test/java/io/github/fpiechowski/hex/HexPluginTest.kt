@@ -26,21 +26,24 @@ class HexPluginTest {
         val extension = project.extensions.getByType<HexExtension>()
 
         with(project.extensions.getByType<JavaPluginExtension>()) {
-            val port = sourceSets.getByName(extension.portName.get())
+            val domain = sourceSets.getByName(extension.domainName.get()).apply {
+                java.srcDirs.any { it.path.endsWith("/src/domain/java") }
+                java.srcDirs.any { it.path.endsWith("/src/domain/port/java") }
+            }
             val adapter = sourceSets.getByName(extension.adapterName.get()).apply {
-                assert(runtimeClasspath.files.containsAll(port.runtimeClasspath.files))
-                assert(compileClasspath.files.containsAll(port.compileClasspath.files))
+                assert(runtimeClasspath.files.containsAll(domain.runtimeClasspath.files))
+                assert(compileClasspath.files.containsAll(domain.compileClasspath.files))
             }
 
             listOf(sourceSets.getByName("main"), sourceSets.getByName("test")).forEach {
                 assert(
                     it.runtimeClasspath.files.containsAll(
-                        port.runtimeClasspath.files + adapter.runtimeClasspath.files
+                        domain.runtimeClasspath.files + adapter.runtimeClasspath.files
                     )
                 )
                 assert(
                     it.compileClasspath.files.containsAll(
-                        port.compileClasspath.files + adapter.compileClasspath.files
+                        domain.compileClasspath.files + adapter.compileClasspath.files
                     )
                 )
             }

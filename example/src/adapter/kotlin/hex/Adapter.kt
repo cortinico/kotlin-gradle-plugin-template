@@ -1,3 +1,7 @@
 package hex
 
-fun adapter(): Port<Domain> = object : Port<Domain> {}
+var inMemoryUser: User? = null
+
+fun saveInMemoryUser(): (User) -> Unit = {
+    inMemoryUser = it
+}
