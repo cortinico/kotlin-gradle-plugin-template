@@ -3,7 +3,7 @@ detekt = "1.23.0"
 kotlin = "1.8.22"
 ktlintGradle = "11.4.0"
 pluginPublish = "1.2.0"
-versionCheck = "0.46.0"
+versionCheck = "0.47.0"
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt"}
