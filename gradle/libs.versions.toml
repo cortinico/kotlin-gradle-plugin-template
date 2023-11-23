@@ -1,6 +1,6 @@
 [versions]
 detekt = "1.23.3"
-kotlin = "1.9.20"
+kotlin = "1.9.21"
 ktlintGradle = "11.6.1"
 pluginPublish = "1.2.1"
 versionCheck = "0.50.0"
