@@ -7,7 +7,6 @@ import org.junit.Test
 import java.io.File
 
 class TemplatePluginTest {
-
     @Test
     fun `plugin is applied correctly to the project`() {
         val project = ProjectBuilder.builder().build()
