@@ -28,7 +28,7 @@ subprojects {
     }
 
     detekt {
-        config = rootProject.files("config/detekt/detekt.yml")
+        config.setFrom(rootProject.files("config/detekt/detekt.yml"))
     }
 }
 
@@ -48,7 +48,7 @@ tasks.withType<DependencyUpdatesTask> {
 fun String.isNonStable() = "^[0-9,.v-]+(-r)?$".toRegex().matches(this).not()
 
 tasks.register("clean", Delete::class.java) {
-    delete(rootProject.buildDir)
+    delete(rootProject.layout.buildDirectory)
 }
 
 tasks.register("reformatAll") {

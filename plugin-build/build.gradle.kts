@@ -31,7 +31,7 @@ allprojects {
     }
 
     detekt {
-        config = rootProject.files("../config/detekt/detekt.yml")
+        config.setFrom(rootProject.files("../config/detekt/detekt.yml"))
     }
 }
 
@@ -43,7 +43,7 @@ tasks.withType<Detekt>().configureEach {
 }
 
 tasks.register("clean", Delete::class.java) {
-    delete(rootProject.buildDir)
+    delete(rootProject.layout.buildDirectory)
 }
 
 tasks.wrapper {
