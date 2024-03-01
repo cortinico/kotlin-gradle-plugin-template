@@ -28,4 +28,4 @@ gradleEnterprise {
 rootProject.name = "hex-gradle-plugin"
 
 includeBuild("plugin-build")
-include(":example")
+include(":example", ":example:nested")

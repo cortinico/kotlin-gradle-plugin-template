@@ -6,7 +6,7 @@
 
 ```kotlin
 plugins {
-    kotlin("jvm") version "1.8.20"
+    kotlin("jvm") version "1.9.22"
     id("io.github.fpiechowski.hex.plugin")
 }
 
@@ -18,6 +18,34 @@ hex {
 
 ```
 
+Then move your source files to one of the source sets:
+* `main` - entrypoint to your application, it will have access to both `domain` and `adapter` sources
+* `domain` - all your application logic and data types, also there is a subdirectory `port` for your interfaces and typealiases, it won't have access to other sources
+* `adapter` - all your technical and infrastructure components, it will have access to `domain`
+
+When declaring dependencies you need to decide for which source set it is defined and which type of sources you need a dependency on.
+
+```kotlin
+dependencies {
+    implementation("xxx:yyy:zzz:vvv")
+    domainImplementation("xxx:yyy:zzz:vvv")
+    adapterImplementation("xxx:yyy:zzz:vvv")
+}
+```
+
+If you want to declare dependency on just adapter or domain sources you need to publish JARs created for these source sets and use their artifacts as dependencies.
+
+In case you use Gradle multiproject build you can specify configuration name to use as the dependency:
+
+```kotlin
+dependencies {
+    adapterImplementation(project("nested", configuration = "adapterImplementation")) // depending on adapter is not recommended, do it only if you wish to extend the adapter
+}
+```
+
+Specifying source set when declaring dependencies makes sense only if you want to add `adapterImplementation` to your
+project, as `domainImplementation` configuration is by default added to main build output, so adding dependency on
+`project("nested")` (or the default artifact from repository) always adds `main` and `domain` sources.
 
 ## Composite Build 📦
 
