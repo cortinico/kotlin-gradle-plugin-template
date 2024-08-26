@@ -60,7 +60,7 @@ This template is ready to let you publish to [Gradle Portal](https://plugins.gra
 
 The [![Publish Plugin to Portal](https://github.com/cortinico/kotlin-gradle-plugin-template/workflows/Publish%20Plugin%20to%20Portal/badge.svg?branch=1.0.0)](https://github.com/cortinico/kotlin-gradle-plugin-template/actions?query=workflow%3A%22Publish+Plugin+to+Portal%22) Github Action will take care of the publishing whenever you **push a tag**.
 
-Please note that you need to configure two secrets: `GRADLE_PUBLISH_KEY` and `GRADLE_PUBLISH_SECRET` with the credetials you can get from your profile on the Gradle Portal.
+Please note that you need to configure two secrets: `GRADLE_PUBLISH_KEY` and `GRADLE_PUBLISH_SECRET` with the credentials you can get from your profile on the Gradle Portal.
 
 ## 100% Kotlin 🅺
 
@@ -91,5 +91,5 @@ Feel free to open a issue or submit a pull request for any bugs/improvements.
 
 ## License 📄
 
-This template is licensed under the MIT License - see the [License](License) file for details.
+This template is licensed under the MIT License - see the [License](LICENSE) file for details.
 Please note that the generated template is offering to start with a MIT license but you can change it to whatever you wish, as long as you attribute under the MIT terms that you're using the template.
