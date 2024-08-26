@@ -15,5 +15,5 @@ jobs:
       - name: Checkout latest code
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
       - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v2
+        uses: gradle/actions/wrapper-validation@v4
       
