@@ -32,6 +32,7 @@ gradlePlugin {
             version = property("VERSION").toString()
             description = property("DESCRIPTION").toString()
             displayName = property("DISPLAY_NAME").toString()
+            // Note: tags cannot include "plugin" or "gradle" when publishing
             tags.set(listOf("plugin", "gradle", "sample", "template"))
         }
     }
@@ -40,6 +41,15 @@ gradlePlugin {
 gradlePlugin {
     website.set(property("WEBSITE").toString())
     vcsUrl.set(property("VCS_URL").toString())
+}
+
+// Use Detekt with type resolution for check
+tasks.named("check").configure {
+    this.setDependsOn(
+        this.dependsOn.filterNot {
+            it is TaskProvider<*> && it.name == "detekt"
+        } + tasks.named("detektMain"),
+    )
 }
 
 tasks.create("setupPluginUploadFromEnvironment") {
