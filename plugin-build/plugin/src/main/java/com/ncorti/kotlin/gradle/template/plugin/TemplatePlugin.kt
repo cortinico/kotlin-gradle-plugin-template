@@ -6,6 +6,7 @@ import org.gradle.api.Project
 const val EXTENSION_NAME = "templateExampleConfig"
 const val TASK_NAME = "templateExample"
 
+@Suppress("UnnecessaryAbstractClass")
 abstract class TemplatePlugin : Plugin<Project> {
     override fun apply(project: Project) {
         // Add the 'template' extension object

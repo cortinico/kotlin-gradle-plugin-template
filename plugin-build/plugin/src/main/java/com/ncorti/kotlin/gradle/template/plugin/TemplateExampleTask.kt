@@ -31,7 +31,7 @@ abstract class TemplateExampleTask : DefaultTask() {
 
     @TaskAction
     fun sampleAction() {
-        val prettyTag = tag.orNull?.let { "[$it]" } ?: ""
+        val prettyTag = tag.orNull?.let { "[$it]" }.orEmpty()
 
         logger.lifecycle("$prettyTag message is: ${message.orNull}")
         logger.lifecycle("$prettyTag tag is: ${tag.orNull}")
