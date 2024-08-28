@@ -33,7 +33,7 @@ gradlePlugin {
             description = property("DESCRIPTION").toString()
             displayName = property("DISPLAY_NAME").toString()
             // Note: tags cannot include "plugin" or "gradle" when publishing
-            tags.set(listOf("plugin", "gradle", "sample", "template"))
+            tags.set(listOf("sample", "template"))
         }
     }
 }
