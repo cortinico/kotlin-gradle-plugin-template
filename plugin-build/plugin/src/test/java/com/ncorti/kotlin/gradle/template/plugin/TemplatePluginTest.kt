@@ -1,12 +1,20 @@
 package com.ncorti.kotlin.gradle.template.plugin
 
 import org.gradle.testfixtures.ProjectBuilder
+import org.gradle.testkit.runner.BuildResult
+import org.gradle.testkit.runner.GradleRunner
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TemporaryFolder
 import java.io.File
 
 class TemplatePluginTest {
+    @JvmField
+    @Rule
+    var testProjectDir: TemporaryFolder = TemporaryFolder()
+
     @Test
     fun `plugin is applied correctly to the project`() {
         val project = ProjectBuilder.builder().build()
@@ -40,4 +48,46 @@ class TemplatePluginTest {
         assertEquals("just-a-message", task.message.get())
         assertEquals(aFile, task.outputFile.get().asFile)
     }
+
+    @Test
+    fun `task generates file with message`() {
+        val message = "Just trying this gradle plugin..."
+        testProjectDir.root.removeRecursively()
+        File(testProjectDir.root, "build.gradle")
+            .writeText(
+                generateBuildFile("message.set(\"$message\")\ntag.set(\"tag\")"),
+            )
+
+        val gradleResult = executeGradleRun("templateExample")
+        assert(gradleResult.output.contains("message is: $message"))
+
+        val generatedFileText = (testProjectDir.root / "build" / "template-example.txt").readText()
+        assert(generatedFileText == "[tag] $message")
+    }
+
+    private fun executeGradleRun(task: String): BuildResult =
+        GradleRunner
+            .create()
+            .withProjectDir(testProjectDir.root)
+            .withArguments(task)
+            .withPluginClasspath()
+            .build()
+
+    private fun generateBuildFile(config: String) =
+        """
+        plugins {
+            id 'com.ncorti.kotlin.gradle.template.plugin'
+        }
+        templateExampleConfig {
+            $config
+        }
+        """.trimIndent()
 }
+
+private fun File.removeRecursively() =
+    this
+        .walkBottomUp()
+        .filter { it != this }
+        .forEach { it.deleteRecursively() }
+
+private operator fun File.div(s: String): File = this.resolve(s)
