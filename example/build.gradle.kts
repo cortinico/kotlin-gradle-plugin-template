@@ -3,9 +3,17 @@ plugins {
     id("io.github.fpiechowski.hex.plugin")
 }
 
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs("nested/build/lib")
+    }
+}
+
 dependencies {
-    // implementation(project("nested"))
-    domainImplementation(project("nested"))
-    adapterImplementation(project("nested"))
-    adapterImplementation(project("nested", configuration = "adapterImplementation")) // depending on adapter is not recommended, do it only if you wish to extend the adapter
+    domainImplementation(":nested-domain:0.1")
+}
+
+tasks.named("compileDomainKotlin") {
+    dependsOn(":example:nested:jar")
 }

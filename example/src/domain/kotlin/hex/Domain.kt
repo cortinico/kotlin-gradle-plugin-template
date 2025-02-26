@@ -1,12 +1,13 @@
 package hex
 
-import example.nested.NestedDomain
-import example.nested.NestedPort
-import java.util.UUID
+import example.nested.ExternalAdapter
+import example.nested.ExternalDomain
+import example.nested.ExternalPort
 
-data class User(val id: UUID)
-
-fun createUser(saveUser: SaveUser, nestedPort: NestedPort): CreateUser = {
-    nestedPort(NestedDomain())
-    saveUser(it)
+class Domain(adapter: Port, externalDomain: ExternalDomain) {
+    init {
+        ExternalDomain(object : ExternalPort {})
+    }
 }
+
+interface Port
