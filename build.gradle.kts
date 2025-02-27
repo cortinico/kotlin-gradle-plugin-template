@@ -70,3 +70,7 @@ tasks.register("preMerge") {
 tasks.wrapper {
     distributionType = Wrapper.DistributionType.ALL
 }
+
+tasks.named("prepareKotlinBuildScriptModel") {
+    dependsOn(":example:dependency:publish")
+}

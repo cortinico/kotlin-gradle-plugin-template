@@ -3,34 +3,56 @@ package io.github.fpiechowski.hex
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
+import org.gradle.api.publish.PublishingExtension
+import org.gradle.api.publish.maven.MavenPublication
+import org.gradle.api.publish.maven.plugins.MavenPublishPlugin
 import org.gradle.jvm.tasks.Jar
-import org.gradle.kotlin.dsl.get
-import org.gradle.kotlin.dsl.named
-import org.gradle.kotlin.dsl.register
+import org.gradle.kotlin.dsl.*
 
 abstract class HexPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         project.run {
-            val extension = project.extensions.create("hex", HexExtension::class.java, project)
+            @Suppress("UNUSED_VARIABLE") val extension =
+                project.extensions.create("hex", HexExtension::class.java, project)
 
             setupSourceSets()
-            setupConfigurations()
             setupJars()
+
+            plugins.withType<MavenPublishPlugin> {
+                setupPublishing()
+            }
         }
     }
+
+    private fun Project.setupPublishing() {
+        extensions.configure<PublishingExtension> {
+            publications.apply {
+                create<MavenPublication>("domain") {
+                    artifactId = "${project.name}-domain"
+                    artifact(tasks["domainJar"])
+                }
+            }
+        }
+    }
+
 
     private fun Project.setupJars() {
         with(extensions.getByType(JavaPluginExtension::class.java)) {
             tasks.named<Jar>("jar") {
-                from(sourceSets[DOMAIN].output)
+                from(sourceSets["domain"].output)
             }
 
-            tasks.register<Jar>("${DOMAIN}Jar") {
-                from(sourceSets[DOMAIN].output)
+            tasks.register<Jar>("domainJar") {
                 archiveBaseName.set("${project.name}-domain")
+                from(sourceSets["domain"].output)
                 group = "build"
             }
+
+            tasks.named<Jar>("shadowJar") {
+                from(sourceSets["domain"].output)
+            }
+
         }
     }
 
@@ -39,31 +61,10 @@ abstract class HexPlugin : Plugin<Project> {
             sourceSets.run {
                 val domain = create(DOMAIN)
 
-                val domainRuntimeClasspath = configurations.getByName("${DOMAIN}RuntimeClasspath")
-                val domainCompileClasspath = configurations.getByName("${DOMAIN}CompileClasspath")
-
-                getByName("main") {
-                    it.runtimeClasspath += domainRuntimeClasspath + domain.output
-                    it.compileClasspath += domainCompileClasspath + domain.output
+                getByName("main").apply {
+                    compileClasspath += domain.output
+                    runtimeClasspath += domain.output
                 }
-
-                getByName("test") {
-                    it.runtimeClasspath += domainRuntimeClasspath + domain.output
-                    it.compileClasspath += domainCompileClasspath + domain.output
-                }
-            }
-        }
-    }
-
-    private fun Project.setupConfigurations() {
-        configurations.run {
-            val domainImplementation = getByName("${DOMAIN}Implementation") {
-                it.isCanBeResolved = true
-                it.isCanBeConsumed = true
-            }
-
-            getByName("implementation") {
-                it.extendsFrom(domainImplementation)
             }
         }
     }

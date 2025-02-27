@@ -13,19 +13,20 @@ dependencyResolutionManagement {
 }
 
 plugins {
-    `gradle-enterprise`
+    id("com.gradle.develocity") version "3.19.2"
 }
 
-gradleEnterprise {
+develocity {
     buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-        publishAlwaysIf(System.getenv("GITHUB_ACTIONS") == "true")
-        publishOnFailure()
+        termsOfUseUrl.set("https://gradle.com/terms-of-service")
+        termsOfUseAgree.set("yes")
+        publishing {
+            onlyIf { System.getenv("GITHUB_ACTIONS") == "true" }
+        }
     }
 }
 
 rootProject.name = "hex-gradle-plugin"
 
 includeBuild("plugin-build")
-include(":example", ":example:nested")
+include(":example:dependency", ":example")

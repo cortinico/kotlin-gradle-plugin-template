@@ -25,8 +25,6 @@ jobs:
         uses: gradle/gradle-build-action@v2
       - name: Run Gradle tasks
         run: ./gradlew preMerge --continue
-
-        # We do a run of the new task `templateExample` created by the plugin
       - name: Run the plugin
         run: ./gradlew :example:build
         if: success()

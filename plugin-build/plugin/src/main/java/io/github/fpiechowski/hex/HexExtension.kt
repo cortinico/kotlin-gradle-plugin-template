@@ -5,5 +5,5 @@ import org.gradle.api.provider.Property
 import javax.inject.Inject
 
 @Suppress("UnnecessaryAbstractClass")
-abstract class HexExtension @Inject constructor(project: Project) {
+abstract class HexExtension @Inject constructor(@Suppress("UNUSED_PARAMETER") project: Project) {
 }

@@ -13,12 +13,14 @@ dependencies {
     testImplementation(libs.junit)
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+kotlin {
+    jvmToolchain(17)
 }
 
 gradlePlugin {
+    website.set(property("WEBSITE").toString())
+    vcsUrl.set(property("VCS_URL").toString())
+
     plugins {
         create(property("ID").toString()) {
             id = property("ID").toString()
@@ -29,15 +31,7 @@ gradlePlugin {
     }
 }
 
-// Configuration Block for the Plugin Marker artifact on Plugin Central
-pluginBundle {
-    website = property("WEBSITE").toString()
-    vcsUrl = property("VCS_URL").toString()
-    description = property("DESCRIPTION").toString()
-    tags = listOf("hexagonal", "ports", "adapters")
-}
-
-tasks.create("setupPluginUploadFromEnvironment") {
+tasks.register("setupPluginUploadFromEnvironment") {
     doLast {
         val key = System.getenv("GRADLE_PUBLISH_KEY")
         val secret = System.getenv("GRADLE_PUBLISH_SECRET")
