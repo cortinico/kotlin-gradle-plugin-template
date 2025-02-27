@@ -7,14 +7,18 @@ import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.publish.maven.plugins.MavenPublishPlugin
 import org.gradle.jvm.tasks.Jar
-import org.gradle.kotlin.dsl.*
+import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.create
+import org.gradle.kotlin.dsl.get
+import org.gradle.kotlin.dsl.named
+import org.gradle.kotlin.dsl.register
+import org.gradle.kotlin.dsl.withType
 
 abstract class HexPlugin : Plugin<Project> {
-
     override fun apply(project: Project) {
         project.run {
-            @Suppress("UNUSED_VARIABLE") val extension =
-                project.extensions.create("hex", HexExtension::class.java, project)
+            @Suppress("UNUSED_VARIABLE")
+            val extension = project.extensions.create("hex", HexExtension::class.java, project)
 
             setupSourceSets()
             setupJars()
@@ -36,7 +40,6 @@ abstract class HexPlugin : Plugin<Project> {
         }
     }
 
-
     private fun Project.setupJars() {
         with(extensions.getByType(JavaPluginExtension::class.java)) {
             tasks.named<Jar>("jar") {
@@ -52,7 +55,6 @@ abstract class HexPlugin : Plugin<Project> {
             tasks.named<Jar>("shadowJar") {
                 from(sourceSets["domain"].output)
             }
-
         }
     }
 
