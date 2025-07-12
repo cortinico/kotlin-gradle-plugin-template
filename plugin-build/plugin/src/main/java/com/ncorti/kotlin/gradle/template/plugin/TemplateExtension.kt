@@ -10,7 +10,9 @@ const val DEFAULT_OUTPUT_FILE = "template-example.txt"
 @Suppress("UnnecessaryAbstractClass")
 abstract class TemplateExtension
     @Inject
-    constructor(project: Project) {
+    constructor(
+        project: Project,
+    ) {
         private val objects = project.objects
 
         // Example of a property that is mandatory. The task will
